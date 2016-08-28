@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<GridPane minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.ikolpakoff.controllers.ComponentsAddWindowController">
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="200.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    </rowConstraints>
+    <children>
+        <Label alignment="CENTER" text="Тип камеры" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
+            <font>
+                <Font size="14.0" />
+            </font>
+            <GridPane.margin>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            </GridPane.margin>
+        </Label>
+        <TextField fx:id="cameraTypeAddTextField" onKeyPressed="#enterPressed" onKeyReleased="#undisablingAddButton" GridPane.columnIndex="1">
+            <GridPane.margin>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            </GridPane.margin>
+        </TextField>
+        <Button fx:id="cameraTypeAddButton" disable="true" mnemonicParsing="false" onAction="#cameraTypeAdd" text="Добавить" GridPane.columnIndex="2" GridPane.halignment="CENTER">
+            <GridPane.margin>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            </GridPane.margin>
+        </Button>
+        <Label alignment="CENTER" layoutX="22.0" layoutY="15.0" text="Счетчик" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+            <font>
+                <Font size="14.0" />
+            </font>
+            <GridPane.margin>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            </GridPane.margin>
+        </Label>
+        <Label alignment="CENTER" layoutX="34.0" layoutY="45.0" text="Устройство защиты" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+            <font>
+                <Font size="14.0" />
+            </font>
+            <GridPane.margin>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            </GridPane.margin>
+        </Label>
+        <TextField fx:id="currentMeterAddTextField" layoutX="166.0" layoutY="13.0" onKeyPressed="#enterPressed" onKeyReleased="#undisablingAddButton" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <GridPane.margin>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            </GridPane.margin>
+        </TextField>
+        <Button fx:id="currentMeterAddButton" disable="true" mnemonicParsing="false" onAction="#currentMeterAdd" text="Добавить" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+            <GridPane.margin>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            </GridPane.margin>
+        </Button>
+        <TextField fx:id="protectionDeviceAddTextField" onKeyPressed="#enterPressed" onKeyReleased="#undisablingAddButton" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <GridPane.margin>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            </GridPane.margin>
+        </TextField>
+        <Button fx:id="protectionDeviceAddButton" disable="true" mnemonicParsing="false" onAction="#protectionDeviceAdd" text="Добавить" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+            <GridPane.margin>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            </GridPane.margin>
+        </Button>
+        <Label alignment="CENTER" text="Компонент" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+            <font>
+                <Font size="14.0" />
+            </font>
+            <GridPane.margin>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            </GridPane.margin>
+        </Label>
+        <TextField fx:id="componentAddTextField" layoutX="156.0" layoutY="73.0" onKeyPressed="#enterPressed" onKeyReleased="#undisablingAddButton" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <GridPane.margin>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            </GridPane.margin>
+        </TextField>
+        <Button fx:id="componentAddButton" disable="true" layoutX="356.0" layoutY="73.0" mnemonicParsing="false" onAction="#componentAdd" text="Добавить" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+            <GridPane.margin>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            </GridPane.margin>
+        </Button>
+    </children>
+</GridPane>
