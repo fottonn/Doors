@@ -1,7 +1,5 @@
 package ru.ikolpakoff.base;
 
-import ru.ikolpakoff.Main;
-
 import java.sql.*;
 
 public class HSQLBaseHelper {
@@ -39,7 +37,7 @@ public class HSQLBaseHelper {
     public static void baseConnect() {
 
         try {
-            con = DriverManager.getConnection("jdbc:hsqldb:file:src/main/resources/base/doorsdb");
+            con = DriverManager.getConnection("jdbc:hsqldb:file:base/doorsdb");
         } catch (SQLException e) {
             System.out.println("base connection exception");
             e.printStackTrace();
