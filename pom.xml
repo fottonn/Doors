@@ -36,7 +36,6 @@
             <artifactId>hibernate-core</artifactId>
             <version>5.2.2.Final</version>
         </dependency>
-
     </dependencies>
 
     <build>
@@ -92,9 +91,6 @@
                     </execution>
                 </executions>
             </plugin>
-
         </plugins>
     </build>
-
-
 </project>

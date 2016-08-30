@@ -76,7 +76,6 @@ public class MainWindowController implements Initializable {
 
         setupClearButtonField(searchField);
         HSQLBaseHelper.baseInit();
-//        fillComboBox("cameraType", cameraTypeComboBox);
 
     }
 

@@ -1,5 +1,8 @@
 package ru.ikolpakoff.base;
 
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
 import java.sql.*;
 
 public class HSQLBaseHelper {
@@ -8,6 +11,7 @@ public class HSQLBaseHelper {
     public static Statement st;
 
     public static void baseInit() {
+//        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
         baseDriverLoad();
         baseConnect();
         statementCreate();
