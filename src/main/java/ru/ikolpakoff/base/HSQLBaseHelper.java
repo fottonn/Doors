@@ -37,7 +37,7 @@ public class HSQLBaseHelper {
     public static void baseConnect() {
 
         try {
-            con = DriverManager.getConnection("jdbc:hsqldb:file:base/doorsdb");
+            con = DriverManager.getConnection("jdbc:hsqldb:file:bd/doorsdb");
         } catch (SQLException e) {
             System.out.println("base connection exception");
             e.printStackTrace();
