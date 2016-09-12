@@ -10,11 +10,16 @@
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 
 <hibernate-configuration>
-    <session-factory name="foo">
+    <session-factory>
         <property name="connection.driver_class">org.hsqldb.jdbcDriver</property>
         <property name="connection.url">jdbc:hsqldb:file:db/doorsdb</property>
         <property name="connection.username">ivan</property>
-        <property name="connection.password">123456</property>
-        <property name="dalect">org.hibernate.dialect.HSQLDialect</property>
+        <property name="connection.password"></property>
+        <property name="dialect">org.hibernate.dialect.HSQLDialect</property>
+        <property name="hibernate.hbm2ddl.auto">create</property>
+        <property name="hibernate.show_sql">true</property>
+
+        <mapping class="ru.ikolpakoff.logic.CameraType"/>
+
     </session-factory>
 </hibernate-configuration>

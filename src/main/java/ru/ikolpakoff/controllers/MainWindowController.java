@@ -27,6 +27,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+
 public class MainWindowController implements Initializable {
 
     private Stage rootStage;
@@ -75,7 +76,6 @@ public class MainWindowController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         setupClearButtonField(searchField);
-        HSQLBaseHelper.baseInit();
 
     }
 
@@ -120,15 +120,15 @@ public class MainWindowController implements Initializable {
     }
 
     private void fillComboBox(String tableName, ComboBox<String> combobox) {
-        ResultSet rs;
-        try {
-            rs = HSQLBaseHelper.st.executeQuery("SELECT title FROM " + tableName);
-            while (rs.next()) {
-                combobox.getItems().add(rs.getString(1));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+//        ResultSet rs;
+//        try {
+//            rs = HSQLBaseHelper.st.executeQuery("SELECT title FROM " + tableName);
+//            while (rs.next()) {
+//                combobox.getItems().add(rs.getString(1));
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
 
     }
 

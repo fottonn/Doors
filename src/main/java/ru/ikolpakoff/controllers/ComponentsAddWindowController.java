@@ -2,7 +2,6 @@ package ru.ikolpakoff.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -10,11 +9,15 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import ru.ikolpakoff.addLogic.Adder;
+import ru.ikolpakoff.addLogic.Adding;
+import ru.ikolpakoff.addLogic.AdderFactory;
 import ru.ikolpakoff.logic.CameraType;
 import ru.ikolpakoff.logic.CurrentMeter;
 import ru.ikolpakoff.logic.ProtectionDevice;
 
 public class ComponentsAddWindowController {
+
     private MainWindowController mainWindowController;
     @FXML
     private TextField componentAddTextField;
@@ -34,43 +37,52 @@ public class ComponentsAddWindowController {
     @FXML
     private Button componentAddButton;
 
-    public void cameraTypeAdd(ActionEvent actionEvent) {
-        if(cameraTypeAddTextField.getText().trim().matches("")) {
-            new Alert(Alert.AlertType.WARNING, "Тип камеры не введен", ButtonType.OK).showAndWait();
-        }
-        else {
-            new CameraType(cameraTypeAddTextField.getText()).addToScene(mainWindowController.getCameraTypeComboBox());
-        }
-        cameraTypeAddTextField.clear();
+
+    /*getters & setters start*/
+
+    public void setMainWindowController(MainWindowController mainWindowController) {
+        this.mainWindowController = mainWindowController;
     }
 
-    public void currentMeterAdd(ActionEvent actionEvent) {
-        if(currentMeterAddTextField.getText().trim().matches("")) {
-            new Alert(Alert.AlertType.WARNING, "Наименование счетчика не введено", ButtonType.OK).showAndWait();
-        }
-        else {
-            new CurrentMeter(currentMeterAddTextField.getText()).addToScene(mainWindowController.getCurrentMeterComboBox());
-        }
-        currentMeterAddTextField.clear();
+    public TextField getComponentAddTextField() {
+        return componentAddTextField;
     }
 
-    public void protectionDeviceAdd(ActionEvent actionEvent) {
-        if(protectionDeviceAddTextField.getText().trim().matches("")) {
-            new Alert(Alert.AlertType.WARNING, "Наименование устройства защиты не введено", ButtonType.OK).showAndWait();
-        }
-        else {
-            new ProtectionDevice(protectionDeviceAddTextField.getText()).addToScene(mainWindowController.getProtectionDeviceComboBox());
-        }
-        protectionDeviceAddTextField.clear();
+    public TextField getProtectionDeviceAddTextField() {
+        return protectionDeviceAddTextField;
+    }
+
+    public TextField getCurrentMeterAddTextField() {
+        return currentMeterAddTextField;
+    }
+
+    public TextField getCameraTypeAddTextField() {
+        return cameraTypeAddTextField;
+    }
+
+    /*getters & setters end*/
+
+
+    /*business logic*/
+
+    public void elementAdd(ActionEvent actionEvent) {
+
+        Button button;
+        Adder adder;
+        AdderFactory factory = new AdderFactory();
+        Object object = actionEvent.getSource();
+
+        if (object != null && object instanceof Button) button = (Button) object;
+        else return;
+
+        adder = factory.createAdder(button, this, mainWindowController);
+        adder.addToScene();
+        adder.addToBase();
     }
 
     public void componentAdd(ActionEvent actionEvent) {
 //        new ComponentAdding(mainWindowController).addToScene(componentAddTextField.getText());
         componentAddTextField.clear();
-    }
-
-    public void setMainWindowController(MainWindowController mainWindowController) {
-        this.mainWindowController = mainWindowController;
     }
 
 
@@ -114,7 +126,7 @@ public class ComponentsAddWindowController {
     //enter pressed
     @FXML
     private void enterPressed(KeyEvent keyEvent) {
-        if(keyEvent.getCode() != KeyCode.ENTER) return;
+        if (keyEvent.getCode() != KeyCode.ENTER) return;
         Object source = keyEvent.getSource();
         if (!(source instanceof TextField)) return;
         TextField textField = (TextField) source;
