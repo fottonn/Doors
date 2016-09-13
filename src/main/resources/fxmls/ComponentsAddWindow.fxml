@@ -97,7 +97,7 @@
             </GridPane.margin>
         </TextField>
         <Button fx:id="componentAddButton" disable="true" layoutX="356.0" layoutY="73.0" mnemonicParsing="false"
-                onAction="#componentAdd" text="Добавить" GridPane.columnIndex="2" GridPane.halignment="CENTER"
+                onAction="#elementAdd" text="Добавить" GridPane.columnIndex="2" GridPane.halignment="CENTER"
                 GridPane.rowIndex="3">
             <GridPane.margin>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>

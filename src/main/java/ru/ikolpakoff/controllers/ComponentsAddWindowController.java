@@ -3,18 +3,12 @@ package ru.ikolpakoff.controllers;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import ru.ikolpakoff.addLogic.Adder;
-import ru.ikolpakoff.addLogic.Adding;
 import ru.ikolpakoff.addLogic.AdderFactory;
-import ru.ikolpakoff.logic.CameraType;
-import ru.ikolpakoff.logic.CurrentMeter;
-import ru.ikolpakoff.logic.ProtectionDevice;
 
 public class ComponentsAddWindowController {
 
@@ -78,11 +72,6 @@ public class ComponentsAddWindowController {
         adder = factory.createAdder(button, this, mainWindowController);
         adder.addToScene();
         adder.addToBase();
-    }
-
-    public void componentAdd(ActionEvent actionEvent) {
-//        new ComponentAdding(mainWindowController).addToScene(componentAddTextField.getText());
-        componentAddTextField.clear();
     }
 
 

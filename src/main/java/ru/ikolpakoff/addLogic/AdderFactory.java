@@ -29,6 +29,9 @@ public class AdderFactory {
                 adder = new ProtectionDeviceAdder(componentsAddWindowController.getProtectionDeviceAddTextField(),
                         mainWindowController.getProtectionDeviceComboBox());
                 break;
+            case "componentAddButton":
+                adder = new ComponentAdder(componentsAddWindowController.getComponentAddTextField(),
+                        mainWindowController);
         }
 
         return adder;
