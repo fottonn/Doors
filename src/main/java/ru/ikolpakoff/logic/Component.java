@@ -17,7 +17,8 @@ public class Component {
     private CheckBox checkBox;
     private BigDecimalField bigDecimalField;
 
-    public Component() {}
+    public Component() {
+    }
 
     public Component(String name) {
 

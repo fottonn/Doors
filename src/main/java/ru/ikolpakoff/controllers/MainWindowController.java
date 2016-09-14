@@ -1,30 +1,32 @@
 package ru.ikolpakoff.controllers;
 
 import javafx.beans.property.ObjectProperty;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import jfxtras.labs.scene.control.BigDecimalField;
 import org.controlsfx.control.textfield.CustomTextField;
 import org.controlsfx.control.textfield.TextFields;
-import ru.ikolpakoff.base.HSQLBaseHelper;
 import ru.ikolpakoff.logic.CameraType;
 import ru.ikolpakoff.logic.CurrentMeter;
 import ru.ikolpakoff.logic.ProtectionDevice;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
 import java.net.URL;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 
@@ -117,6 +119,43 @@ public class MainWindowController implements Initializable {
         componentsAddWindowStage.setScene(new Scene(root, 415, 120));
         componentsAddWindowStage.setResizable(false);
         componentsAddWindowStage.show();
+    }
+
+    //this method provide undisabling checkboxes
+    public void undisablingCheckBoxes() {
+        ObservableList<Node> children = componentsGridPain.getChildren();
+        if (cameraTypeComboBox.getValue() != null) {
+            for (Node node : children) {
+                if (node instanceof CheckBox) {
+                    node.setDisable(false);
+                }
+            }
+        } else {
+            for (Node node : children) {
+                if (node instanceof CheckBox) {
+                    node.setDisable(true);
+                }
+            }
+        }
+    }
+
+    //this method provide undisabling or disabling ComboBoxes or BigDecimalFields of elements
+    public void checkBoxFire(ActionEvent actionEvent) {
+        CheckBox cb = (CheckBox) actionEvent.getSource();
+        int rIndex = GridPane.getRowIndex(cb);
+        for (Node node : componentsGridPain.getChildren()) {
+            if (node instanceof ComboBox || node instanceof BigDecimalField) {
+                if ((GridPane.getRowIndex(node) != null ? GridPane.getRowIndex(node) : 0) == rIndex) {
+                    if (cb.isSelected()) node.setDisable(false);
+                    else {
+                        if (node instanceof ComboBox) ((ComboBox) node).setValue(null);
+                        else ((BigDecimalField) node).setNumber(new BigDecimal(0));
+                        node.setDisable(true);
+                    }
+                }
+            }
+        }
+
     }
 
     private void fillComboBox(String tableName, ComboBox<String> combobox) {

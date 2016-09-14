@@ -1,6 +1,8 @@
 package ru.ikolpakoff.addLogic;
 
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -22,6 +24,7 @@ public class ComponentAdder extends Adder {
     public ComponentAdder(TextField textField, MainWindowController mainWindowController) {
         super(textField, mainWindowController);
         this.component = new Component(name);
+        this.component.getCheckBox().setOnAction(event -> mainWindowController.checkBoxFire(event));
     }
 
     @Override
@@ -46,6 +49,9 @@ public class ComponentAdder extends Adder {
 
             addRows(componentsGridPane, components);
         }
+
+        mainWindowController.getCameraTypeComboBox().setValue(null);
+        Event.fireEvent(mainWindowController.getCameraTypeComboBox(), new ActionEvent());
 
         textField.clear();
 

@@ -81,7 +81,7 @@ public class ComponentsAddWindowController {
         Object source = keyEvent.getSource();
         if (!(source instanceof TextField)) return;
         TextField textField = (TextField) source;
-        if (!textField.getText().equals("")) {
+        if (!textField.getText().trim().equals("")) {
             switch (textField.getId()) {
                 case "cameraTypeAddTextField":
                     cameraTypeAddButton.setDisable(false);
