@@ -20,6 +20,9 @@
         <property name="hibernate.show_sql">true</property>
 
         <mapping class="ru.ikolpakoff.logic.CameraType"/>
+        <mapping class="ru.ikolpakoff.logic.ProtectionDevice"/>
+        <mapping class="ru.ikolpakoff.logic.CurrentMeter"/>
+        <mapping class="ru.ikolpakoff.logic.Component"/>
 
     </session-factory>
 </hibernate-configuration>

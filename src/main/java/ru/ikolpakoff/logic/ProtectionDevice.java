@@ -1,7 +1,16 @@
 package ru.ikolpakoff.logic;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "PROTECTION_DEVICE")
 public class ProtectionDevice implements Comparable<ProtectionDevice> {
 
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    @Column(name = "PROTECTION_DEVICE_NAME")
     private String name;
 
     public ProtectionDevice() {
@@ -9,6 +18,14 @@ public class ProtectionDevice implements Comparable<ProtectionDevice> {
 
     public ProtectionDevice(String name) {
         this.name = name;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {

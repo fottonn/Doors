@@ -7,6 +7,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import ru.ikolpakoff.logic.ProtectionDevice;
+import ru.ikolpakoff.logic.dao.ProtectionDeviceDAO;
 
 public class ProtectionDeviceAdder extends Adder {
 
@@ -36,6 +37,6 @@ public class ProtectionDeviceAdder extends Adder {
 
     @Override
     public void addToBase() {
-
+        new ProtectionDeviceDAO(protectionDevice).save();
     }
 }

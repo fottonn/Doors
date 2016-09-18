@@ -14,6 +14,7 @@ import javafx.scene.layout.RowConstraints;
 import ru.ikolpakoff.controllers.MainWindowController;
 import ru.ikolpakoff.logic.Component;
 import ru.ikolpakoff.logic.ComponentsComparator;
+import ru.ikolpakoff.logic.dao.ComponentDAO;
 
 import java.util.*;
 
@@ -59,7 +60,7 @@ public class ComponentAdder extends Adder {
 
     @Override
     public void addToBase() {
-
+        new ComponentDAO(component).save();
     }
 
     private void deleteRows(ObservableList<RowConstraints> rows, ObservableList<Node> children) {

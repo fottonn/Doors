@@ -7,14 +7,17 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import ru.ikolpakoff.logic.CameraType;
+import ru.ikolpakoff.logic.dao.CameraTypeDAO;
 
 public class CameraTypeAdder extends Adder {
 
     private CameraType cameraType;
+    private TextField decimalTextField;
 
-    public CameraTypeAdder(TextField textField, ComboBox comboBox) {
-        super(textField, comboBox);
-        cameraType = new CameraType(name);
+    public CameraTypeAdder(TextField textField, TextField decimalTextField, ComboBox comboBox) {
+        super(textField, decimalTextField, comboBox);
+        this.decimalTextField = decimalTextField;
+        cameraType = new CameraType(name, decimalTextField.getText());
     }
 
     @Override
@@ -31,13 +34,11 @@ public class CameraTypeAdder extends Adder {
         }
 
         textField.clear();
-
-
-
+        decimalTextField.clear();
     }
 
     @Override
     public void addToBase() {
-
+        new CameraTypeDAO(cameraType).save();
     }
 }

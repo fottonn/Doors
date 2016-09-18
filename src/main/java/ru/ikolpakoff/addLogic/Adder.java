@@ -17,6 +17,12 @@ abstract public class Adder implements Adding {
         this.name = textField.getText().trim();
     }
 
+    public Adder(TextField textField, TextField decimalTextField, ComboBox comboBox) {
+        this.comboBox = comboBox;
+        this.textField = textField;
+        this.name = textField.getText().trim();
+    }
+
     public Adder(TextField textField, MainWindowController mainWindowController) {
         this.textField = textField;
         this.mainWindowController = mainWindowController;

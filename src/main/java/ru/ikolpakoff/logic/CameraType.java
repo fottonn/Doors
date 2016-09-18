@@ -10,14 +10,18 @@ public class CameraType implements Comparable<CameraType> {
     @GeneratedValue
     private Long id;
 
-    @Column(name = "CAMERA_TYPE_NAME")
+    @Column(name = "CAMERA_TYPE_NAME", nullable = false)
     private String name;
+
+    @Column(name = "DECIMAL_NUMBER", nullable = false)
+    private String decimalNumber;
 
     public CameraType() {
     }
 
-    public CameraType(String name) {
+    public CameraType(String name, String decimalNumber) {
         this.name = name;
+        this.decimalNumber = decimalNumber;
     }
 
     public String getName() {
@@ -34,6 +38,14 @@ public class CameraType implements Comparable<CameraType> {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getDecimalNumber() {
+        return decimalNumber;
+    }
+
+    public void setDecimalNumber(String decimalNumber) {
+        this.decimalNumber = decimalNumber;
     }
 
     @Override

@@ -7,6 +7,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import ru.ikolpakoff.logic.CurrentMeter;
+import ru.ikolpakoff.logic.dao.CurrentMeterDAO;
 
 public class CurrentMeterAdder extends Adder {
 
@@ -36,6 +37,6 @@ public class CurrentMeterAdder extends Adder {
 
     @Override
     public void addToBase() {
-
+        new CurrentMeterDAO(currentMeter).save();
     }
 }

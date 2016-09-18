@@ -20,6 +20,8 @@ public class ComponentsAddWindowController {
     @FXML
     private TextField currentMeterAddTextField;
     @FXML
+    private TextField cameraDecimalNumberTextField;
+    @FXML
     private TextField cameraTypeAddTextField;
 
     @FXML
@@ -54,6 +56,10 @@ public class ComponentsAddWindowController {
         return cameraTypeAddTextField;
     }
 
+    public TextField getCameraDecimalNumberTextField() {
+        return cameraDecimalNumberTextField;
+    }
+
     /*getters & setters end*/
 
 
@@ -84,7 +90,16 @@ public class ComponentsAddWindowController {
         if (!textField.getText().trim().equals("")) {
             switch (textField.getId()) {
                 case "cameraTypeAddTextField":
-                    cameraTypeAddButton.setDisable(false);
+                    if (cameraDecimalNumberTextField.getText() != null &&
+                            cameraDecimalNumberTextField.getText().trim().matches("ВШМА.\\d{6}.\\d{3}"))
+                        cameraTypeAddButton.setDisable(false);
+                    break;
+                case "cameraDecimalNumberTextField":
+                    if (cameraDecimalNumberTextField.getText().trim().matches("ВШМА.\\d{6}.\\d{3}") &&
+                            cameraTypeAddTextField.getText() != null && !cameraTypeAddTextField.getText().trim().equals(""))
+                        cameraTypeAddButton.setDisable(false);
+                    if (!cameraDecimalNumberTextField.getText().trim().matches("ВШМА.\\d{6}.\\d{3}"))
+                        cameraTypeAddButton.setDisable(true);
                     break;
                 case "currentMeterAddTextField":
                     currentMeterAddButton.setDisable(false);
@@ -98,6 +113,9 @@ public class ComponentsAddWindowController {
             }
         } else switch (textField.getId()) {
             case "cameraTypeAddTextField":
+                cameraTypeAddButton.setDisable(true);
+                break;
+            case "cameraDecimalNumberTextField":
                 cameraTypeAddButton.setDisable(true);
                 break;
             case "currentMeterAddTextField":
@@ -121,7 +139,12 @@ public class ComponentsAddWindowController {
         TextField textField = (TextField) source;
         switch (textField.getId()) {
             case "cameraTypeAddTextField":
-                Event.fireEvent(cameraTypeAddButton, new ActionEvent());
+                if (!cameraTypeAddButton.isDisabled())
+                    Event.fireEvent(cameraTypeAddButton, new ActionEvent());
+                break;
+            case "cameraDecimalNumberTextField":
+                if (!cameraTypeAddButton.isDisabled())
+                    Event.fireEvent(cameraTypeAddButton, new ActionEvent());
                 break;
             case "currentMeterAddTextField":
                 Event.fireEvent(currentMeterAddButton, new ActionEvent());

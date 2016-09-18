@@ -19,6 +19,7 @@ public class AdderFactory {
         switch (button.getId()) {
             case "cameraTypeAddButton":
                 adder = new CameraTypeAdder(componentsAddWindowController.getCameraTypeAddTextField(),
+                        componentsAddWindowController.getCameraDecimalNumberTextField(),
                         mainWindowController.getCameraTypeComboBox());
                 break;
             case "currentMeterAddButton":

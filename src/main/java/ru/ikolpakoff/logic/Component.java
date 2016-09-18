@@ -8,13 +8,25 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import jfxtras.labs.scene.control.BigDecimalField;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 
+@Entity
+@Table(name = "COMPONENT")
 public class Component {
 
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    @Column(name = "COMPONENT_NAME")
     private String name;
+
+    @Transient
     private Label label;
+    @Transient
     private CheckBox checkBox;
+    @Transient
     private BigDecimalField bigDecimalField;
 
     public Component() {
@@ -44,6 +56,14 @@ public class Component {
         GridPane.setHalignment(bigDecimalField, HPos.CENTER);
         GridPane.setValignment(bigDecimalField, VPos.CENTER);
         GridPane.setMargin(bigDecimalField, new Insets(5));
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {

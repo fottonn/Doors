@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 import jfxtras.labs.scene.control.BigDecimalField;
 import org.controlsfx.control.textfield.CustomTextField;
 import org.controlsfx.control.textfield.TextFields;
+import ru.ikolpakoff.base.HibernateUtil;
 import ru.ikolpakoff.logic.CameraType;
 import ru.ikolpakoff.logic.CurrentMeter;
 import ru.ikolpakoff.logic.ProtectionDevice;
@@ -33,6 +34,7 @@ import java.util.ResourceBundle;
 public class MainWindowController implements Initializable {
 
     private Stage rootStage;
+    public HibernateUtil hibernateUtil;
 
     public Stage getRootStage() {
         return rootStage;
@@ -78,6 +80,8 @@ public class MainWindowController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         setupClearButtonField(searchField);
+        hibernateUtil = HibernateUtil.getHibernateUtil();
+
 
     }
 
@@ -95,6 +99,9 @@ public class MainWindowController implements Initializable {
 
     //this method provide close action from menu
     public void closeAction(ActionEvent actionEvent) {
+        if (HibernateUtil.sessionFactory != null) {
+            HibernateUtil.sessionFactoryClose();
+        }
         rootStage.close();
     }
 
