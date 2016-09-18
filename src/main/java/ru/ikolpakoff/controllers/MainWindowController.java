@@ -3,6 +3,7 @@ package ru.ikolpakoff.controllers;
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -140,6 +141,10 @@ public class MainWindowController implements Initializable {
         } else {
             for (Node node : children) {
                 if (node instanceof CheckBox) {
+                    if (((CheckBox) node).isSelected()) {
+                        ((CheckBox) node).setSelected(false);
+                        Event.fireEvent(node, new ActionEvent());
+                    }
                     node.setDisable(true);
                 }
             }

@@ -4,7 +4,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<?import jfxtras.labs.scene.control.*?>
 <?import org.controlsfx.control.textfield.CustomTextField?>
 <VBox prefHeight="375.0" prefWidth="560.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="ru.ikolpakoff.controllers.MainWindowController">
@@ -101,18 +100,6 @@
                                                         vgrow="SOMETIMES"/>
                                         <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0"
                                                         vgrow="SOMETIMES"/>
-                                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0"
-                                                        vgrow="SOMETIMES"/>
-                                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0"
-                                                        vgrow="SOMETIMES"/>
-                                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0"
-                                                        vgrow="SOMETIMES"/>
-                                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0"
-                                                        vgrow="SOMETIMES"/>
-                                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0"
-                                                        vgrow="SOMETIMES"/>
-                                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0"
-                                                        vgrow="SOMETIMES"/>
                                     </rowConstraints>
                                     <children>
 
@@ -172,145 +159,6 @@
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
                                             </GridPane.margin>
                                         </ComboBox>
-
-                                        <Label layoutX="15.0" layoutY="77.0" text="Кнопка" GridPane.halignment="LEFT"
-                                               GridPane.rowIndex="3" GridPane.valignment="CENTER">
-                                            <GridPane.margin>
-                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
-                                            </GridPane.margin>
-                                        </Label>
-                                        <CheckBox fx:id="buttonCheckBox" disable="true" layoutX="182.0" layoutY="77.0"
-                                                  mnemonicParsing="false" onAction="#checkBoxFire"
-                                                  GridPane.columnIndex="1" GridPane.halignment="CENTER"
-                                                  GridPane.rowIndex="3" GridPane.valignment="CENTER">
-                                            <GridPane.margin>
-                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
-                                            </GridPane.margin>
-                                        </CheckBox>
-                                        <BigDecimalField fx:id="buttonBigDecimalField" disable="true" minValue="0"
-                                                         prefWidth="150.0" stylesheets="@../css/MyBigDecimalField.css"
-                                                         text="0" GridPane.columnIndex="2" GridPane.halignment="CENTER"
-                                                         GridPane.rowIndex="3" GridPane.valignment="CENTER">
-                                            <GridPane.margin>
-                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
-                                            </GridPane.margin>
-                                        </BigDecimalField>
-
-                                        <Label layoutX="15.0" layoutY="77.0" text="Лампочка" GridPane.halignment="LEFT"
-                                               GridPane.rowIndex="4" GridPane.valignment="CENTER">
-                                            <GridPane.margin>
-                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
-                                            </GridPane.margin>
-                                        </Label>
-                                        <CheckBox fx:id="lampCheckBox" disable="true" layoutX="182.0" layoutY="77.0"
-                                                  mnemonicParsing="false" GridPane.columnIndex="1"
-                                                  GridPane.halignment="CENTER" GridPane.rowIndex="4"
-                                                  GridPane.valignment="CENTER">
-                                            <GridPane.margin>
-                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
-                                            </GridPane.margin>
-                                        </CheckBox>
-                                        <BigDecimalField fx:id="lampBigDecimalField" disable="true" minValue="0"
-                                                         prefWidth="150.0" stylesheets="@../css/MyBigDecimalField.css"
-                                                         text="0" GridPane.columnIndex="2" GridPane.halignment="CENTER"
-                                                         GridPane.rowIndex="4" GridPane.valignment="CENTER">
-                                            <GridPane.margin>
-                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
-                                            </GridPane.margin>
-                                        </BigDecimalField>
-
-                                        <Label layoutX="15.0" layoutY="77.0" text="Кулачок" GridPane.halignment="LEFT"
-                                               GridPane.rowIndex="5" GridPane.valignment="CENTER">
-                                            <GridPane.margin>
-                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
-                                            </GridPane.margin>
-                                        </Label>
-                                        <CheckBox fx:id="camSwitchCheckBox" disable="true" layoutX="182.0"
-                                                  layoutY="77.0" mnemonicParsing="false" GridPane.columnIndex="1"
-                                                  GridPane.halignment="CENTER" GridPane.rowIndex="5"
-                                                  GridPane.valignment="CENTER">
-                                            <GridPane.margin>
-                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
-                                            </GridPane.margin>
-                                        </CheckBox>
-                                        <BigDecimalField fx:id="camSwitchBigDecimalField" disable="true" minValue="0"
-                                                         prefWidth="150.0" stylesheets="@../css/MyBigDecimalField.css"
-                                                         text="0" GridPane.columnIndex="2" GridPane.halignment="CENTER"
-                                                         GridPane.rowIndex="5" GridPane.valignment="CENTER">
-                                            <GridPane.margin>
-                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
-                                            </GridPane.margin>
-                                        </BigDecimalField>
-
-                                        <Label layoutX="15.0" layoutY="77.0" text="Блинкер" GridPane.halignment="LEFT"
-                                               GridPane.rowIndex="6" GridPane.valignment="CENTER">
-                                            <GridPane.margin>
-                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
-                                            </GridPane.margin>
-                                        </Label>
-                                        <CheckBox fx:id="blinkerCheckBox" disable="true" layoutX="182.0" layoutY="77.0"
-                                                  mnemonicParsing="false" GridPane.columnIndex="1"
-                                                  GridPane.halignment="CENTER" GridPane.rowIndex="6"
-                                                  GridPane.valignment="CENTER">
-                                            <GridPane.margin>
-                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
-                                            </GridPane.margin>
-                                        </CheckBox>
-                                        <BigDecimalField fx:id="blinkerBigDecimalField" disable="true" minValue="0"
-                                                         prefWidth="150.0" stylesheets="@../css/MyBigDecimalField.css"
-                                                         text="0" GridPane.columnIndex="2" GridPane.halignment="CENTER"
-                                                         GridPane.rowIndex="6" GridPane.valignment="CENTER">
-                                            <GridPane.margin>
-                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
-                                            </GridPane.margin>
-                                        </BigDecimalField>
-
-                                        <Label layoutX="15.0" layoutY="77.0" text="Амперметр/Вольтметр"
-                                               GridPane.halignment="LEFT" GridPane.rowIndex="7"
-                                               GridPane.valignment="CENTER">
-                                            <GridPane.margin>
-                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
-                                            </GridPane.margin>
-                                        </Label>
-                                        <CheckBox fx:id="ampermeterCheckBox" disable="true" layoutX="182.0"
-                                                  layoutY="77.0" mnemonicParsing="false" GridPane.columnIndex="1"
-                                                  GridPane.halignment="CENTER" GridPane.rowIndex="7"
-                                                  GridPane.valignment="CENTER">
-                                            <GridPane.margin>
-                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
-                                            </GridPane.margin>
-                                        </CheckBox>
-                                        <BigDecimalField fx:id="ampermeterBigDecimalField" disable="true" minValue="0"
-                                                         prefWidth="150.0" stylesheets="@../css/MyBigDecimalField.css"
-                                                         text="0" GridPane.columnIndex="2" GridPane.halignment="CENTER"
-                                                         GridPane.rowIndex="7" GridPane.valignment="CENTER">
-                                            <GridPane.margin>
-                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
-                                            </GridPane.margin>
-                                        </BigDecimalField>
-
-                                        <Label layoutX="15.0" layoutY="77.0" text="KCD" GridPane.halignment="LEFT"
-                                               GridPane.rowIndex="8" GridPane.valignment="CENTER">
-                                            <GridPane.margin>
-                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
-                                            </GridPane.margin>
-                                        </Label>
-                                        <CheckBox fx:id="kcdCheckBox" disable="true" layoutX="182.0" layoutY="77.0"
-                                                  mnemonicParsing="false" GridPane.columnIndex="1"
-                                                  GridPane.halignment="CENTER" GridPane.rowIndex="8"
-                                                  GridPane.valignment="CENTER">
-                                            <GridPane.margin>
-                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
-                                            </GridPane.margin>
-                                        </CheckBox>
-                                        <BigDecimalField fx:id="kcdBigDecimalField" disable="true" minValue="0"
-                                                         prefWidth="150.0" stylesheets="@../css/MyBigDecimalField.css"
-                                                         text="0" GridPane.columnIndex="2" GridPane.halignment="CENTER"
-                                                         GridPane.rowIndex="8" GridPane.valignment="CENTER">
-                                            <GridPane.margin>
-                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
-                                            </GridPane.margin>
-                                        </BigDecimalField>
 
                                     </children>
                                 </GridPane>

@@ -24,8 +24,7 @@ public class ComponentAdder extends Adder {
 
     public ComponentAdder(TextField textField, MainWindowController mainWindowController) {
         super(textField, mainWindowController);
-        this.component = new Component(name);
-        this.component.getCheckBox().setOnAction(event -> mainWindowController.checkBoxFire(event));
+        component = new Component(name);
     }
 
     @Override
@@ -93,6 +92,7 @@ public class ComponentAdder extends Adder {
         for (int i = 3; i < gridPane.getRowConstraints().size(); i++) {
             comp = components.pollFirst();
             gridPane.add(comp.getLabel(), 0, i);
+            comp.getCheckBox().setOnAction(event -> mainWindowController.checkBoxFire(event));
             gridPane.add(comp.getCheckBox(), 1, i);
             gridPane.add(comp.getBigDecimalField(), 2, i);
         }
