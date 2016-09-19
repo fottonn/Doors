@@ -24,6 +24,10 @@ import ru.ikolpakoff.base.HibernateUtil;
 import ru.ikolpakoff.logic.CameraType;
 import ru.ikolpakoff.logic.CurrentMeter;
 import ru.ikolpakoff.logic.ProtectionDevice;
+import ru.ikolpakoff.logic.dao.CameraTypeDAO;
+import ru.ikolpakoff.logic.dao.ComponentDAO;
+import ru.ikolpakoff.logic.dao.CurrentMeterDAO;
+import ru.ikolpakoff.logic.dao.ProtectionDeviceDAO;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -82,6 +86,10 @@ public class MainWindowController implements Initializable {
 
         setupClearButtonField(searchField);
         hibernateUtil = HibernateUtil.getHibernateUtil();
+        new CameraTypeDAO().fill(this);
+        new ProtectionDeviceDAO().fill(this);
+        new CurrentMeterDAO().fill(this);
+        new ComponentDAO().fill(this);
 
 
     }
@@ -169,19 +177,5 @@ public class MainWindowController implements Initializable {
         }
 
     }
-
-    private void fillComboBox(String tableName, ComboBox<String> combobox) {
-//        ResultSet rs;
-//        try {
-//            rs = HSQLBaseHelper.st.executeQuery("SELECT title FROM " + tableName);
-//            while (rs.next()) {
-//                combobox.getItems().add(rs.getString(1));
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-
-    }
-
 
 }

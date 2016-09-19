@@ -11,6 +11,13 @@ abstract public class Adder implements Adding {
     TextField textField;
     MainWindowController mainWindowController;
 
+    public void setMainWindowController(MainWindowController mainWindowController) {
+        this.mainWindowController = mainWindowController;
+    }
+
+    public Adder() {
+    }
+
     public Adder(TextField textField, ComboBox comboBox) {
         this.comboBox = comboBox;
         this.textField = textField;

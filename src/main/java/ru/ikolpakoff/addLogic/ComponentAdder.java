@@ -22,6 +22,9 @@ public class ComponentAdder extends Adder {
 
     Component component;
 
+    public ComponentAdder() {
+    }
+
     public ComponentAdder(TextField textField, MainWindowController mainWindowController) {
         super(textField, mainWindowController);
         component = new Component(name);
@@ -75,7 +78,7 @@ public class ComponentAdder extends Adder {
         rows.remove(3, rows.size());
     }
 
-    private void addRows(GridPane gridPane, TreeSet<Component> components) {
+    public void addRows(GridPane gridPane, TreeSet<Component> components) {
 
         Component comp;
 

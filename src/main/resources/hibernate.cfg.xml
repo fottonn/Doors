@@ -16,7 +16,7 @@
         <property name="connection.username">ivan</property>
         <property name="connection.password"></property>
         <property name="dialect">org.hibernate.dialect.HSQLDialect</property>
-        <property name="hibernate.hbm2ddl.auto">create</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>
         <property name="hibernate.show_sql">true</property>
 
         <mapping class="ru.ikolpakoff.logic.CameraType"/>
