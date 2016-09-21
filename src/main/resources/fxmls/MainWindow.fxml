@@ -67,7 +67,7 @@
                               GridPane.rowIndex="2" GridPane.valignment="CENTER">
                             <children>
                                 <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Найти"/>
-                                <Button fx:id="addButton" mnemonicParsing="false" prefWidth="100.0" text="Добавить"/>
+                                <Button fx:id="addButton" onAction="#doorAdding" mnemonicParsing="false" prefWidth="100.0" text="Добавить"/>
                                 <Button mnemonicParsing="false" prefWidth="100.0" text="Изменить"/>
                             </children>
                             <GridPane.margin>

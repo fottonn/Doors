@@ -8,14 +8,14 @@ import ru.ikolpakoff.controllers.MainWindowController;
 import ru.ikolpakoff.logic.CameraType;
 
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class CameraTypeDAO implements ElementsDAO {
 
     private CameraType cameraType;
 
-    public CameraTypeDAO() {}
+    public CameraTypeDAO() {
+    }
 
     public CameraTypeDAO(CameraType cameraType) {
         this.cameraType = cameraType;

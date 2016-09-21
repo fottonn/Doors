@@ -23,6 +23,7 @@
         <mapping class="ru.ikolpakoff.logic.ProtectionDevice"/>
         <mapping class="ru.ikolpakoff.logic.CurrentMeter"/>
         <mapping class="ru.ikolpakoff.logic.Component"/>
+        <mapping class="ru.ikolpakoff.logic.Door"/>
 
     </session-factory>
 </hibernate-configuration>

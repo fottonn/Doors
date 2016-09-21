@@ -24,10 +24,7 @@ import ru.ikolpakoff.base.HibernateUtil;
 import ru.ikolpakoff.logic.CameraType;
 import ru.ikolpakoff.logic.CurrentMeter;
 import ru.ikolpakoff.logic.ProtectionDevice;
-import ru.ikolpakoff.logic.dao.CameraTypeDAO;
-import ru.ikolpakoff.logic.dao.ComponentDAO;
-import ru.ikolpakoff.logic.dao.CurrentMeterDAO;
-import ru.ikolpakoff.logic.dao.ProtectionDeviceDAO;
+import ru.ikolpakoff.logic.dao.*;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -90,7 +87,6 @@ public class MainWindowController implements Initializable {
         new ProtectionDeviceDAO().fill(this);
         new CurrentMeterDAO().fill(this);
         new ComponentDAO().fill(this);
-
 
     }
 
@@ -166,10 +162,18 @@ public class MainWindowController implements Initializable {
         for (Node node : componentsGridPain.getChildren()) {
             if (node instanceof ComboBox || node instanceof BigDecimalField) {
                 if ((GridPane.getRowIndex(node) != null ? GridPane.getRowIndex(node) : 0) == rIndex) {
-                    if (cb.isSelected()) node.setDisable(false);
-                    else {
+                    if (cb.isSelected()) {
+                        if (node instanceof BigDecimalField) {
+                            ((BigDecimalField) node).setNumber(new BigDecimal(1));
+                            ((BigDecimalField) node).setMinValue(new BigDecimal(1));
+                        }
+                        node.setDisable(false);
+                    } else {
                         if (node instanceof ComboBox) ((ComboBox) node).setValue(null);
-                        else ((BigDecimalField) node).setNumber(new BigDecimal(0));
+                        else {
+                            ((BigDecimalField) node).setMinValue(new BigDecimal(0));
+                            ((BigDecimalField) node).setNumber(new BigDecimal(0));
+                        }
                         node.setDisable(true);
                     }
                 }
@@ -178,4 +182,15 @@ public class MainWindowController implements Initializable {
 
     }
 
+    public void doorAdding() {
+        int doorNumber;
+        CameraType cameraType;
+        ProtectionDevice protectionDevice;
+        CurrentMeter currentMeter;
+
+        cameraType = this.getCameraTypeComboBox().getValue();
+        protectionDevice = this.getProtectionDeviceComboBox().getValue();
+        currentMeter = this.getCurrentMeterComboBox().getValue();
+        doorNumber = new DoorDAO().getLastDoorNumber(cameraType);
+    }
 }
