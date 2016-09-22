@@ -1,9 +1,12 @@
 package ru.ikolpakoff.logic.dao;
 
+import org.hibernate.NonUniqueResultException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import ru.ikolpakoff.base.HibernateUtil;
 import ru.ikolpakoff.logic.CameraType;
+import ru.ikolpakoff.logic.Component;
 import ru.ikolpakoff.logic.Door;
 
 public class DoorDAO {
@@ -26,6 +29,38 @@ public class DoorDAO {
     }
 
     public int getLastDoorNumber(CameraType cameraType) {
-        return 0;
+
+        Object objectNumber = null;
+        Session session = HibernateUtil.sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        Query query = session.createQuery("select max(p.number) from Door p");
+        try {
+            objectNumber = query.uniqueResult();
+        } catch (NonUniqueResultException e) {
+            System.out.println("Non unique doors number in table of door");
+            e.printStackTrace();
+        }
+
+        transaction.commit();
+        session.close();
+
+        if (objectNumber == null) {
+            return 0;
+        } else {
+            return (int) objectNumber;
+        }
+
+    }
+
+    public Component getComponent(String componentName) {
+        Session session = HibernateUtil.sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        Query<Component> query = session.createQuery("from Component where name = :n");
+        query.setParameter("n", componentName);
+        Component component = query.uniqueResult();
+        transaction.commit();
+        session.close();
+
+        return component;
     }
 }

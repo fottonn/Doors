@@ -97,4 +97,5 @@ public class Component {
     public void setBigDecimalField(BigDecimalField bigDecimalField) {
         this.bigDecimalField = bigDecimalField;
     }
+
 }

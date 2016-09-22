@@ -10,10 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -21,15 +18,15 @@ import jfxtras.labs.scene.control.BigDecimalField;
 import org.controlsfx.control.textfield.CustomTextField;
 import org.controlsfx.control.textfield.TextFields;
 import ru.ikolpakoff.base.HibernateUtil;
-import ru.ikolpakoff.logic.CameraType;
-import ru.ikolpakoff.logic.CurrentMeter;
-import ru.ikolpakoff.logic.ProtectionDevice;
+import ru.ikolpakoff.logic.*;
 import ru.ikolpakoff.logic.dao.*;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 
@@ -183,14 +180,57 @@ public class MainWindowController implements Initializable {
     }
 
     public void doorAdding() {
+        Door door;
+
         int doorNumber;
         CameraType cameraType;
         ProtectionDevice protectionDevice;
         CurrentMeter currentMeter;
+        Map<Component, Integer> components;
 
-        cameraType = this.getCameraTypeComboBox().getValue();
-        protectionDevice = this.getProtectionDeviceComboBox().getValue();
-        currentMeter = this.getCurrentMeterComboBox().getValue();
-        doorNumber = new DoorDAO().getLastDoorNumber(cameraType);
+        Component component;
+        CheckBox checkBox;
+        Label label = null;
+        BigDecimalField bigDecimalField = null;
+
+        cameraType = cameraTypeComboBox.getValue();
+        protectionDevice = protectionDeviceComboBox.getValue();
+        currentMeter = currentMeterComboBox.getValue();
+        doorNumber = new DoorDAO().getLastDoorNumber(cameraType) + 1;
+        components = new HashMap<>();
+
+        door = new Door(doorNumber, cameraType, protectionDevice, currentMeter);
+
+        ObservableList<Node> componentsGridPainChildrens = componentsGridPain.getChildren();
+        String componentName = null;
+        Integer componentCount = null;
+        for (Node children : componentsGridPainChildrens) {
+            if (children instanceof CheckBox && ((CheckBox) children).isSelected() &&
+                    (GridPane.getRowIndex(children) != null ? GridPane.getRowIndex(children) : 0) >= 3) {
+                checkBox = (CheckBox)children;
+                for (Node node : componentsGridPainChildrens) {
+                    if (GridPane.getRowIndex(children) == GridPane.getRowIndex(node)) {
+                        if (node instanceof Label) {
+                            label = (Label)node;
+                            componentName = label.getText();
+                        } else if(node instanceof BigDecimalField) {
+                            bigDecimalField = (BigDecimalField)node;
+                            componentCount = bigDecimalField.getNumber().intValue();
+                        }
+                    }
+                }
+
+                component = new DoorDAO().getComponent(componentName);
+                component.setCheckBox(checkBox);
+                component.setLabel(label);
+                component.setBigDecimalField(bigDecimalField);
+                components.put(component, componentCount);
+            }
+        }
+
+        door.setComponents(components);
+
+        new DoorDAO(door).save();
+
     }
 }
