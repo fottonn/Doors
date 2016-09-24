@@ -1,5 +1,7 @@
 package ru.ikolpakoff.logic.dao;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -7,6 +9,7 @@ import ru.ikolpakoff.base.HibernateUtil;
 import ru.ikolpakoff.controllers.MainWindowController;
 import ru.ikolpakoff.logic.CameraType;
 
+import javax.persistence.PersistenceException;
 import java.util.Collections;
 import java.util.List;
 
@@ -27,8 +30,13 @@ public class CameraTypeDAO implements ElementsDAO {
         Session session = HibernateUtil.sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         session.saveOrUpdate(cameraType);
-        transaction.commit();
-        session.close();
+        try {
+            transaction.commit();
+        } catch (PersistenceException e) {
+            new Alert(Alert.AlertType.WARNING, String.format("%s уже содержится в базе", cameraType.getDecimalNumber()), ButtonType.OK).showAndWait();
+        } finally {
+            session.close();
+        }
     }
 
     @Override

@@ -13,7 +13,7 @@ public class CameraType implements Comparable<CameraType> {
     @Column(name = "CAMERA_TYPE_NAME", nullable = false)
     private String name;
 
-    @Column(name = "DECIMAL_NUMBER", nullable = false)
+    @Column(name = "DECIMAL_NUMBER", nullable = false, unique = true)
     private String decimalNumber;
 
     public CameraType() {
