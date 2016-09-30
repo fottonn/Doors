@@ -33,6 +33,7 @@ import java.util.ResourceBundle;
 
 public class MainWindowController implements Initializable {
 
+
     private Stage rootStage;
     public HibernateUtil hibernateUtil;
 
@@ -59,6 +60,8 @@ public class MainWindowController implements Initializable {
     private MenuItem menuAdd;
     @FXML
     private GridPane componentsGridPain;
+    @FXML
+    private Button addButton;
 
     public ComboBox<CurrentMeter> getCurrentMeterComboBox() {
         return currentMeterComboBox;
@@ -135,12 +138,14 @@ public class MainWindowController implements Initializable {
     public void undisablingCheckBoxes() {
         ObservableList<Node> children = componentsGridPain.getChildren();
         if (cameraTypeComboBox.getValue() != null) {
+            addButton.setDisable(false);
             for (Node node : children) {
                 if (node instanceof CheckBox) {
                     node.setDisable(false);
                 }
             }
         } else {
+            addButton.setDisable(true);
             for (Node node : children) {
                 if (node instanceof CheckBox) {
                     if (((CheckBox) node).isSelected()) {
@@ -164,6 +169,9 @@ public class MainWindowController implements Initializable {
                         if (node instanceof BigDecimalField) {
                             ((BigDecimalField) node).setNumber(new BigDecimal(1));
                             ((BigDecimalField) node).setMinValue(new BigDecimal(1));
+                        } else {
+                            ComboBox c = (ComboBox) node;
+                            c.setValue(c.getItems().get(0));
                         }
                         node.setDisable(false);
                     } else {
@@ -238,8 +246,8 @@ public class MainWindowController implements Initializable {
         } else {
             for(Door d : doorsByHash) {
                 if(d.getCameraType().equals(door.getCameraType())) {
-                    if(d.getProtectionDevice().equals(door.getProtectionDevice())) {
-                        if(d.getCurrentMeter().equals(door.getCurrentMeter())) {
+                    if((d.getProtectionDevice() == null && door.getProtectionDevice() == null) || d.getProtectionDevice().equals(door.getProtectionDevice())) {
+                        if((d.getCurrentMeter() == null && door.getCurrentMeter() == null) || d.getCurrentMeter().equals(door.getCurrentMeter())) {
                             if(d.getComponents().equals(door.getComponents())) {
                                 new Alert(Alert.AlertType.WARNING, "Добавляемая дверь уже содержится в базе", ButtonType.OK).showAndWait();
                                 return;

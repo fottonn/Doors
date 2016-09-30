@@ -107,7 +107,11 @@ public class Door {
         int hash = 0;
 
         hash += cameraType.getName().hashCode();
+
+        if(protectionDevice != null)
         hash += protectionDevice.getName().hashCode();
+
+        if(currentMeter != null)
         hash += currentMeter.getName().hashCode();
 
         if(components != null && components.size() !=0) {
