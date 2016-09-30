@@ -238,6 +238,7 @@ public class MainWindowController implements Initializable {
         }
 
         door.setComponents(components);
+        door.setHash();
 
         List<Door> doorsByHash = new DoorDAO().getDoorByHash(door.getHash());
 

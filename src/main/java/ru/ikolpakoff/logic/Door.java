@@ -101,6 +101,10 @@ public class Door {
         return hash;
     }
 
+    public void setHash() {
+        this.hash = hashCode();
+    }
+
     @Override
     public int hashCode() {
 
@@ -109,15 +113,15 @@ public class Door {
         hash += cameraType.getName().hashCode();
 
         if(protectionDevice != null)
-        hash += protectionDevice.getName().hashCode();
+        hash += 31*hash + protectionDevice.getName().hashCode();
 
         if(currentMeter != null)
-        hash += currentMeter.getName().hashCode();
+        hash += 31*hash + currentMeter.getName().hashCode();
 
         if(components != null && components.size() !=0) {
             Set<Map.Entry<Component, Integer>> entrySet = components.entrySet();
             for(Map.Entry<Component, Integer> entry : entrySet) {
-                hash += entry.getKey().getName().hashCode()* entry.getValue();
+                hash += 31*hash + entry.getKey().hashCode()* entry.getValue();
             }
         }
 
