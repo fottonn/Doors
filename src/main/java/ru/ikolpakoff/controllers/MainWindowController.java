@@ -26,6 +26,7 @@ import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -230,7 +231,30 @@ public class MainWindowController implements Initializable {
 
         door.setComponents(components);
 
-        new DoorDAO(door).save();
+        List<Door> doorsByHash = new DoorDAO().getDoorByHash(door.getHash());
+
+        if(doorsByHash == null || doorsByHash.isEmpty()) {
+            new DoorDAO(door).save();
+        } else {
+            for(Door d : doorsByHash) {
+                if(d.getCameraType().equals(door.getCameraType())) {
+                    if(d.getProtectionDevice().equals(door.getProtectionDevice())) {
+                        if(d.getCurrentMeter().equals(door.getCurrentMeter())) {
+                            if(d.getComponents().equals(door.getComponents())) {
+                                new Alert(Alert.AlertType.WARNING, "Добавляемая дверь уже содержится в базе", ButtonType.OK).showAndWait();
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+            new DoorDAO(door).save();
+        }
+
+
+    }
+
+    public void doorFinding() {
 
     }
 }

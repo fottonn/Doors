@@ -63,7 +63,7 @@ public class CameraType implements Comparable<CameraType> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CameraType that = (CameraType) o;
-        return name.equalsIgnoreCase(that.name);
+        return decimalNumber.equalsIgnoreCase(that.decimalNumber);
     }
 
 }

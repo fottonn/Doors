@@ -10,6 +10,7 @@ import jfxtras.labs.scene.control.BigDecimalField;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Objects;
 
 @Entity
 @Table(name = "COMPONENT")
@@ -98,4 +99,16 @@ public class Component {
         this.bigDecimalField = bigDecimalField;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Component component = (Component) o;
+        return name.equalsIgnoreCase(component.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
 }

@@ -3,6 +3,7 @@ package ru.ikolpakoff.logic;
 import javax.persistence.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 @Entity
 @Table(name = "DOOR")
@@ -27,11 +28,17 @@ public class Door {
     @JoinColumn(name = "CURRENT_METER_ID")
     private CurrentMeter currentMeter;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "DOOR_COMPONENT")
     @Column(name = "COMPONENT_COUNT")
     @MapKeyJoinColumn(name = "COMPONENT_ID")
     private Map<Component, Integer> components;
+
+    @Column(name = "HASH_CODE")
+    private int hash;
+
+    public Door() {
+    }
 
     public Door(int number, CameraType cameraType, ProtectionDevice protectionDevice, CurrentMeter currentMeter) {
         this.number = number;
@@ -39,6 +46,7 @@ public class Door {
         this.protectionDevice = protectionDevice;
         this.currentMeter = currentMeter;
         components = new HashMap<>();
+        hash = hashCode();
     }
 
     public Long getId() {
@@ -87,5 +95,29 @@ public class Door {
 
     public void setComponents(Map<Component, Integer> components) {
         this.components = components;
+    }
+
+    public int getHash() {
+        return hash;
+    }
+
+    @Override
+    public int hashCode() {
+
+        int hash = 0;
+
+        hash += cameraType.getName().hashCode();
+        hash += protectionDevice.getName().hashCode();
+        hash += currentMeter.getName().hashCode();
+
+        if(components != null && components.size() !=0) {
+            Set<Map.Entry<Component, Integer>> entrySet = components.entrySet();
+            for(Map.Entry<Component, Integer> entry : entrySet) {
+                hash += entry.getKey().getName().hashCode()* entry.getValue();
+            }
+        }
+
+
+        return hash;
     }
 }

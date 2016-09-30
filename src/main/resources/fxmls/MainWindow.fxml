@@ -66,7 +66,7 @@
                         <HBox prefHeight="19.0" prefWidth="321.0" spacing="10.0" GridPane.halignment="CENTER"
                               GridPane.rowIndex="2" GridPane.valignment="CENTER">
                             <children>
-                                <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Найти"/>
+                                <Button fx:id="findButton" onAction="#doorFinding" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Найти"/>
                                 <Button fx:id="addButton" onAction="#doorAdding" mnemonicParsing="false" prefWidth="100.0" text="Добавить"/>
                                 <Button mnemonicParsing="false" prefWidth="100.0" text="Изменить"/>
                             </children>

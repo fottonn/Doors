@@ -9,6 +9,8 @@ import ru.ikolpakoff.logic.CameraType;
 import ru.ikolpakoff.logic.Component;
 import ru.ikolpakoff.logic.Door;
 
+import java.util.List;
+
 public class DoorDAO {
 
     private Door door;
@@ -62,5 +64,16 @@ public class DoorDAO {
         session.close();
 
         return component;
+    }
+
+    public List<Door> getDoorByHash(Integer hash) {
+        Session session = HibernateUtil.sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        Query<Door> query = session.createQuery("from Door where hash = :h");
+        query.setParameter("h", hash);
+        List<Door> doorList = query.list();
+        transaction.commit();
+        session.close();
+        return doorList;
     }
 }
