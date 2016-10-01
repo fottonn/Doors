@@ -4,6 +4,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -11,6 +12,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -189,6 +192,32 @@ public class MainWindowController implements Initializable {
     }
 
     public void doorAdding() {
+        Door door = doorByFields();
+
+        List<Door> doorsByHash = new DoorDAO().getDoorByHash(door.getHash());
+
+        if(doorsByHash == null || doorsByHash.isEmpty()) {
+            new DoorDAO(door).save();
+        } else {
+            for(Door d : doorsByHash) {
+                if(d.getCameraType().equals(door.getCameraType())) {
+                    if((d.getProtectionDevice() == null && door.getProtectionDevice() == null) || d.getProtectionDevice().equals(door.getProtectionDevice())) {
+                        if((d.getCurrentMeter() == null && door.getCurrentMeter() == null) || d.getCurrentMeter().equals(door.getCurrentMeter())) {
+                            if(d.getComponents().equals(door.getComponents())) {
+                                new Alert(Alert.AlertType.WARNING, "Добавляемая дверь уже содержится в базе", ButtonType.OK).showAndWait();
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+            new DoorDAO(door).save();
+        }
+
+
+    }
+
+    private Door doorByFields() {
         Door door;
 
         int doorNumber;
@@ -240,30 +269,44 @@ public class MainWindowController implements Initializable {
         door.setComponents(components);
         door.setHash();
 
-        List<Door> doorsByHash = new DoorDAO().getDoorByHash(door.getHash());
+        return door;
+    }
 
-        if(doorsByHash == null || doorsByHash.isEmpty()) {
-            new DoorDAO(door).save();
+    public void doorFinding() {
+
+        Door door = doorByFields();
+
+        List<Door> doors = new DoorDAO().getDoorByHash(door.getHash());
+
+        if(doors == null || doors.isEmpty()) {
+            new Alert(Alert.AlertType.WARNING, "Дверь не найдена", ButtonType.OK).showAndWait();
         } else {
-            for(Door d : doorsByHash) {
+            for(Door d : doors) {
                 if(d.getCameraType().equals(door.getCameraType())) {
                     if((d.getProtectionDevice() == null && door.getProtectionDevice() == null) || d.getProtectionDevice().equals(door.getProtectionDevice())) {
                         if((d.getCurrentMeter() == null && door.getCurrentMeter() == null) || d.getCurrentMeter().equals(door.getCurrentMeter())) {
                             if(d.getComponents().equals(door.getComponents())) {
-                                new Alert(Alert.AlertType.WARNING, "Добавляемая дверь уже содержится в базе", ButtonType.OK).showAndWait();
+                                ButtonType copyButtonType = new ButtonType("Скопировать и закрыть");
+                                Alert alert = new Alert(Alert.AlertType.INFORMATION,
+                                        String.format("%s-%03d",d.getCameraType().getDecimalNumber(),d.getNumber()), copyButtonType);
+                                alert.setHeaderText("Дверь найдена!");
+                                Button btn =(Button) alert.getDialogPane().lookupButton(copyButtonType);
+                                btn.setOnAction(event -> {
+                                    Clipboard clbd = Clipboard.getSystemClipboard();
+                                    ClipboardContent clipboardContent = new ClipboardContent();
+                                    clipboardContent.putString(alert.getContentText());
+                                    clbd.setContent(clipboardContent);
+                                });
+                                alert.showAndWait();
                                 return;
                             }
                         }
                     }
                 }
             }
-            new DoorDAO(door).save();
+            new Alert(Alert.AlertType.WARNING, "Дверь не найдена", ButtonType.OK).showAndWait();
+
         }
-
-
-    }
-
-    public void doorFinding() {
 
     }
 }

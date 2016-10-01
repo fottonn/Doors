@@ -35,7 +35,8 @@ public class DoorDAO {
         Object objectNumber = null;
         Session session = HibernateUtil.sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        Query query = session.createQuery("select max(p.number) from Door p");
+        Query query = session.createQuery("select max(p.number) from Door p where p.cameraType = :ct");
+        query.setParameter("ct", cameraType);
         try {
             objectNumber = query.uniqueResult();
         } catch (NonUniqueResultException e) {
@@ -47,7 +48,7 @@ public class DoorDAO {
         session.close();
 
         if (objectNumber == null) {
-            return 0;
+            return -1;
         } else {
             return (int) objectNumber;
         }
@@ -76,4 +77,6 @@ public class DoorDAO {
         session.close();
         return doorList;
     }
+
+
 }
