@@ -78,5 +78,18 @@ public class DoorDAO {
         return doorList;
     }
 
+    public List<Door> getAllDoors () {
+        Session session = HibernateUtil.sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        Query<Door> query = session.createQuery("from Door");
+        List<Door> doorList = query.list();
+        transaction.commit();
+        session.close();
+        for(Door d : doorList) {
+            d.setDoorDesignation();
+        }
+        return doorList;
+    }
+
 
 }

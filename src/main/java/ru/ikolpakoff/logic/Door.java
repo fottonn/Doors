@@ -1,5 +1,7 @@
 package ru.ikolpakoff.logic;
 
+import javafx.beans.property.SimpleStringProperty;
+
 import javax.persistence.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -37,6 +39,9 @@ public class Door {
     @Column(name = "HASH_CODE")
     private int hash;
 
+    @Transient
+    private SimpleStringProperty doorDesignation;
+
     public Door() {
     }
 
@@ -47,6 +52,8 @@ public class Door {
         this.currentMeter = currentMeter;
         components = new HashMap<>();
         hash = hashCode();
+        doorDesignation = (number == 0 ? new SimpleStringProperty(cameraType.getDecimalNumber()) :
+                new SimpleStringProperty(String.format("%s-%03d",cameraType.getDecimalNumber(),number)));
     }
 
     public Long getId() {
@@ -103,6 +110,20 @@ public class Door {
 
     public void setHash() {
         this.hash = hashCode();
+    }
+
+    public String getDoorDesignation() {
+        return doorDesignation.get();
+    }
+
+    public SimpleStringProperty doorDesignationProperty() {
+        return doorDesignation;
+    }
+
+    public void setDoorDesignation() {
+        if(doorDesignation == null) doorDesignation = new SimpleStringProperty();
+        doorDesignation.set((number == 0 ? cameraType.getDecimalNumber() :
+                String.format("%s-%03d",cameraType.getDecimalNumber(),number)));
     }
 
     @Override

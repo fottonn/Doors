@@ -1,6 +1,7 @@
 package ru.ikolpakoff.controllers;
 
 import javafx.beans.property.ObjectProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -12,6 +13,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.GridPane;
@@ -64,7 +66,13 @@ public class MainWindowController implements Initializable {
     @FXML
     private GridPane componentsGridPain;
     @FXML
+    private Button findButton;
+    @FXML
     private Button addButton;
+    @FXML
+    private TableView<Door> doorTable;
+    @FXML
+    private TableColumn<Door,String> doorColumn;
 
     public ComboBox<CurrentMeter> getCurrentMeterComboBox() {
         return currentMeterComboBox;
@@ -91,6 +99,7 @@ public class MainWindowController implements Initializable {
         new ProtectionDeviceDAO().fill(this);
         new CurrentMeterDAO().fill(this);
         new ComponentDAO().fill(this);
+        fillTableColumn(new DoorDAO().getAllDoors());
 
     }
 
@@ -142,6 +151,7 @@ public class MainWindowController implements Initializable {
         ObservableList<Node> children = componentsGridPain.getChildren();
         if (cameraTypeComboBox.getValue() != null) {
             addButton.setDisable(false);
+            findButton.setDisable(false);
             for (Node node : children) {
                 if (node instanceof CheckBox) {
                     node.setDisable(false);
@@ -149,6 +159,7 @@ public class MainWindowController implements Initializable {
             }
         } else {
             addButton.setDisable(true);
+            findButton.setDisable(true);
             for (Node node : children) {
                 if (node instanceof CheckBox) {
                     if (((CheckBox) node).isSelected()) {
@@ -286,9 +297,10 @@ public class MainWindowController implements Initializable {
                     if((d.getProtectionDevice() == null && door.getProtectionDevice() == null) || d.getProtectionDevice().equals(door.getProtectionDevice())) {
                         if((d.getCurrentMeter() == null && door.getCurrentMeter() == null) || d.getCurrentMeter().equals(door.getCurrentMeter())) {
                             if(d.getComponents().equals(door.getComponents())) {
+                                d.setDoorDesignation();
                                 ButtonType copyButtonType = new ButtonType("Скопировать и закрыть");
                                 Alert alert = new Alert(Alert.AlertType.INFORMATION,
-                                        String.format("%s-%03d",d.getCameraType().getDecimalNumber(),d.getNumber()), copyButtonType);
+                                        d.getDoorDesignation(), copyButtonType);
                                 alert.setHeaderText("Дверь найдена!");
                                 Button btn =(Button) alert.getDialogPane().lookupButton(copyButtonType);
                                 btn.setOnAction(event -> {
@@ -298,6 +310,7 @@ public class MainWindowController implements Initializable {
                                     clbd.setContent(clipboardContent);
                                 });
                                 alert.showAndWait();
+                                fillTableColumn(d);
                                 return;
                             }
                         }
@@ -308,5 +321,21 @@ public class MainWindowController implements Initializable {
 
         }
 
+    }
+
+    public void fillTableColumn(Door door) {
+        PropertyValueFactory<Door, String> propertyValueFactory = new PropertyValueFactory<>("doorDesignation");
+        doorColumn.setCellValueFactory(propertyValueFactory);
+        ObservableList<Door> list = FXCollections.observableArrayList();
+        list.add(door);
+        doorTable.setItems(list);
+    }
+
+    public void fillTableColumn(List<Door> doors) {
+        PropertyValueFactory<Door, String> propertyValueFactory = new PropertyValueFactory<>("doorDesignation");
+        doorColumn.setCellValueFactory(propertyValueFactory);
+        ObservableList<Door> list = FXCollections.observableArrayList();
+        list.addAll(doors);
+        doorTable.setItems(list);
     }
 }
