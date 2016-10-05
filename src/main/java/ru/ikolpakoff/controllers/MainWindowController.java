@@ -5,7 +5,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -16,6 +15,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -30,10 +30,7 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
 
 public class MainWindowController implements Initializable {
@@ -72,7 +69,13 @@ public class MainWindowController implements Initializable {
     @FXML
     private TableView<Door> doorTable;
     @FXML
-    private TableColumn<Door,String> doorColumn;
+    private TableColumn<Door, String> doorColumn;
+    @FXML
+    private Label doorCountLabel;
+    @FXML
+    private CheckBox currentMeterCheckBox;
+    @FXML
+    private CheckBox protectionDeviceCheckBox;
 
     public ComboBox<CurrentMeter> getCurrentMeterComboBox() {
         return currentMeterComboBox;
@@ -99,6 +102,7 @@ public class MainWindowController implements Initializable {
         new ProtectionDeviceDAO().fill(this);
         new CurrentMeterDAO().fill(this);
         new ComponentDAO().fill(this);
+        doorColumnInit();
         fillTableColumn(new DoorDAO().getAllDoors());
 
     }
@@ -207,14 +211,14 @@ public class MainWindowController implements Initializable {
 
         List<Door> doorsByHash = new DoorDAO().getDoorByHash(door.getHash());
 
-        if(doorsByHash == null || doorsByHash.isEmpty()) {
+        if (doorsByHash == null || doorsByHash.isEmpty()) {
             new DoorDAO(door).save();
         } else {
-            for(Door d : doorsByHash) {
-                if(d.getCameraType().equals(door.getCameraType())) {
-                    if((d.getProtectionDevice() == null && door.getProtectionDevice() == null) || d.getProtectionDevice().equals(door.getProtectionDevice())) {
-                        if((d.getCurrentMeter() == null && door.getCurrentMeter() == null) || d.getCurrentMeter().equals(door.getCurrentMeter())) {
-                            if(d.getComponents().equals(door.getComponents())) {
+            for (Door d : doorsByHash) {
+                if (d.getCameraType().equals(door.getCameraType())) {
+                    if ((d.getProtectionDevice() == null && door.getProtectionDevice() == null) || d.getProtectionDevice().equals(door.getProtectionDevice())) {
+                        if ((d.getCurrentMeter() == null && door.getCurrentMeter() == null) || d.getCurrentMeter().equals(door.getCurrentMeter())) {
+                            if (d.getComponents().equals(door.getComponents())) {
                                 new Alert(Alert.AlertType.WARNING, "Добавляемая дверь уже содержится в базе", ButtonType.OK).showAndWait();
                                 return;
                             }
@@ -256,14 +260,14 @@ public class MainWindowController implements Initializable {
         for (Node children : componentsGridPainChildrens) {
             if (children instanceof CheckBox && ((CheckBox) children).isSelected() &&
                     (GridPane.getRowIndex(children) != null ? GridPane.getRowIndex(children) : 0) >= 3) {
-                checkBox = (CheckBox)children;
+                checkBox = (CheckBox) children;
                 for (Node node : componentsGridPainChildrens) {
                     if (GridPane.getRowIndex(children) == GridPane.getRowIndex(node)) {
                         if (node instanceof Label) {
-                            label = (Label)node;
+                            label = (Label) node;
                             componentName = label.getText();
-                        } else if(node instanceof BigDecimalField) {
-                            bigDecimalField = (BigDecimalField)node;
+                        } else if (node instanceof BigDecimalField) {
+                            bigDecimalField = (BigDecimalField) node;
                             componentCount = bigDecimalField.getNumber().intValue();
                         }
                     }
@@ -283,26 +287,78 @@ public class MainWindowController implements Initializable {
         return door;
     }
 
+    private void fieldsByDoor(Door door) {
+
+        ObservableList<Node> componentsGridPainChildrens = componentsGridPain.getChildren();
+        Set<Map.Entry<Component, Integer>> components = door.getComponents().entrySet();
+
+        for (Node node : componentsGridPainChildrens) {
+            if (node instanceof CheckBox) {
+                CheckBox checkBox = (CheckBox) node;
+                checkBox.setSelected(false);
+                Event.fireEvent(checkBox, new ActionEvent());
+            }
+        }
+
+
+        cameraTypeComboBox.setValue(door.getCameraType());
+
+        if (door.getProtectionDevice() != null) {
+            protectionDeviceCheckBox.setSelected(true);
+            Event.fireEvent(protectionDeviceCheckBox, new ActionEvent());
+            protectionDeviceComboBox.setValue(door.getProtectionDevice());
+        }
+
+        if (door.getCurrentMeter() != null) {
+            currentMeterCheckBox.setSelected(true);
+            Event.fireEvent(currentMeterCheckBox, new ActionEvent());
+            currentMeterComboBox.setValue(door.getCurrentMeter());
+        }
+
+
+        for (Map.Entry<Component, Integer> entry : components) {
+            for (Node node : componentsGridPainChildrens) {
+                if (node != null && node instanceof Label && ((Label) node).getText().equals(entry.getKey().getName())) {
+                    for (Node node1 : componentsGridPainChildrens) {
+                        if (node1 != null && GridPane.getRowIndex(node1) == GridPane.getRowIndex(node) && node1 instanceof BigDecimalField) {
+                            for (Node cb : componentsGridPainChildrens) {
+                                if (cb != null && cb instanceof CheckBox && GridPane.getRowIndex(cb) == GridPane.getRowIndex(node)) {
+                                    ((CheckBox) cb).setSelected(true);
+                                    Event.fireEvent(cb, new ActionEvent());
+                                    break;
+                                }
+                            }
+                            ((BigDecimalField) node1).setNumber(new BigDecimal(entry.getValue()));
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+
+    }
+
     public void doorFinding() {
 
         Door door = doorByFields();
 
         List<Door> doors = new DoorDAO().getDoorByHash(door.getHash());
 
-        if(doors == null || doors.isEmpty()) {
+        if (doors == null || doors.isEmpty()) {
             new Alert(Alert.AlertType.WARNING, "Дверь не найдена", ButtonType.OK).showAndWait();
         } else {
-            for(Door d : doors) {
-                if(d.getCameraType().equals(door.getCameraType())) {
-                    if((d.getProtectionDevice() == null && door.getProtectionDevice() == null) || d.getProtectionDevice().equals(door.getProtectionDevice())) {
-                        if((d.getCurrentMeter() == null && door.getCurrentMeter() == null) || d.getCurrentMeter().equals(door.getCurrentMeter())) {
-                            if(d.getComponents().equals(door.getComponents())) {
+            for (Door d : doors) {
+                if (d.getCameraType().equals(door.getCameraType())) {
+                    if ((d.getProtectionDevice() == null && door.getProtectionDevice() == null) || d.getProtectionDevice().equals(door.getProtectionDevice())) {
+                        if ((d.getCurrentMeter() == null && door.getCurrentMeter() == null) || d.getCurrentMeter().equals(door.getCurrentMeter())) {
+                            if (d.getComponents().equals(door.getComponents())) {
                                 d.setDoorDesignation();
                                 ButtonType copyButtonType = new ButtonType("Скопировать и закрыть");
                                 Alert alert = new Alert(Alert.AlertType.INFORMATION,
                                         d.getDoorDesignation(), copyButtonType);
                                 alert.setHeaderText("Дверь найдена!");
-                                Button btn =(Button) alert.getDialogPane().lookupButton(copyButtonType);
+                                Button btn = (Button) alert.getDialogPane().lookupButton(copyButtonType);
                                 btn.setOnAction(event -> {
                                     Clipboard clbd = Clipboard.getSystemClipboard();
                                     ClipboardContent clipboardContent = new ClipboardContent();
@@ -324,18 +380,54 @@ public class MainWindowController implements Initializable {
     }
 
     public void fillTableColumn(Door door) {
-        PropertyValueFactory<Door, String> propertyValueFactory = new PropertyValueFactory<>("doorDesignation");
-        doorColumn.setCellValueFactory(propertyValueFactory);
         ObservableList<Door> list = FXCollections.observableArrayList();
         list.add(door);
         doorTable.setItems(list);
+        doorCountLabel.setText("1");
     }
 
     public void fillTableColumn(List<Door> doors) {
-        PropertyValueFactory<Door, String> propertyValueFactory = new PropertyValueFactory<>("doorDesignation");
-        doorColumn.setCellValueFactory(propertyValueFactory);
         ObservableList<Door> list = FXCollections.observableArrayList();
         list.addAll(doors);
         doorTable.setItems(list);
+        doorCountLabel.setText(String.valueOf(list.size()));
+    }
+
+    public void doorColumnInit() {
+
+        doorColumn.setCellFactory(param -> {
+            TableCell<Door, String> cell = new TableCell<Door, String>() {
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+
+                    if (item == null || empty) {
+                        setText(null);
+                        setStyle("");
+                    } else {
+                        setText(item);
+                    }
+                }
+
+            };
+
+
+            ContextMenu contextMenu = new ContextMenu();
+            MenuItem editMenuItem = new MenuItem("Изменить");
+            contextMenu.getItems().add(editMenuItem);
+            cell.setContextMenu(contextMenu);
+
+            cell.setOnMouseClicked(event -> {
+                if (event.getButton().equals(MouseButton.PRIMARY)) {
+                    if (event.getClickCount() == 2) {
+                        fieldsByDoor((Door) cell.getTableRow().getItem());
+                    }
+                }
+            });
+
+            return cell;
+        });
+
+        doorColumn.setCellValueFactory(new PropertyValueFactory<Door, String>("doorDesignation"));
     }
 }
